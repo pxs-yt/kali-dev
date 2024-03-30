@@ -1,5 +1,14 @@
+// Create a string to hold the data
+var dataStr = "";
+
+// Function to add data to the string
+function addData(data) {
+    console.log(data);
+    dataStr += data + "\n";
+}
+
 // Print User Agent
-console.log("User Agent: " + navigator.userAgent);
+addData("User Agent: " + navigator.userAgent);
 
 // Print Operating System
 var OSName = "Unknown OS";
@@ -7,70 +16,73 @@ if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
 if (navigator.appVersion.indexOf("Mac") != -1) OSName = "MacOS";
 if (navigator.appVersion.indexOf("X11") != -1) OSName = "UNIX";
 if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-console.log("Operating System: " + OSName);
+addData("Operating System: " + OSName);
 
 // Print Battery Percentage
+var batteryPromise;
 if (navigator.getBattery) {
-    navigator.getBattery().then(function(battery) {
-        console.log("Battery Percentage: " + battery.level * 100 + "%");
+    batteryPromise = navigator.getBattery().then(function(battery) {
+        addData("Battery Percentage: " + battery.level * 100 + "%");
     });
 } else {
-    console.log("Battery Status API is not supported on this browser.");
+    addData("Battery Status API is not supported on this browser.");
+    batteryPromise = Promise.resolve();
 }
 
 // Print additional navigator properties
-console.log("appCodeName: " + navigator.appCodeName);
-console.log("appName: " + navigator.appName);
-console.log("appVersion: " + navigator.appVersion);
-console.log("cookieEnabled: " + navigator.cookieEnabled);
-console.log("language: " + navigator.language);
-console.log("onLine: " + navigator.onLine);
-console.log("platform: " + navigator.platform);
-console.log("product: " + navigator.product);
-console.log("javaEnabled: " + navigator.javaEnabled());
+addData("appCodeName: " + navigator.appCodeName);
+addData("appName: " + navigator.appName);
+addData("appVersion: " + navigator.appVersion);
+addData("cookieEnabled: " + navigator.cookieEnabled);
+addData("language: " + navigator.language);
+addData("onLine: " + navigator.onLine);
+addData("platform: " + navigator.platform);
+addData("product: " + navigator.product);
+addData("javaEnabled: " + navigator.javaEnabled());
 
 // Print experimental navigator properties
-if (navigator.bluetooth) {
-    console.log("bluetooth: " + navigator.bluetooth);
-} else {
-    console.log("Bluetooth API is not supported on this browser.");
-}
-
-if (navigator.clipboard) {
-    console.log("clipboard: " + navigator.clipboard);
-} else {
-    console.log("Clipboard API is not supported on this browser.");
-}
-
-if (navigator.connection) {
-    console.log("connection: " + navigator.connection);
-} else {
-    console.log("Network Information API is not supported on this browser.");
-}
-
-if (navigator.deviceMemory) {
-    console.log("deviceMemory: " + navigator.deviceMemory);
-} else {
-    console.log("Device Memory API is not supported on this browser.");
-}
-
-if (navigator.gpu) {
-    console.log("gpu: " + navigator.gpu);
-} else {
-    console.log("WebGPU API is not supported on this browser.");
-}
-
-if (navigator.hardwareConcurrency) {
-    console.log("hardwareConcurrency: " + navigator.hardwareConcurrency);
-} else {
-    console.log("Hardware Concurrency API is not supported on this browser.");
-}
+addData("bluetooth: " + navigator.bluetooth);
+addData("clipboard: " + navigator.clipboard);
+addData("connection: " + navigator.connection);
+addData("deviceMemory: " + navigator.deviceMemory);
+addData("gpu: " + navigator.gpu);
+addData("hardwareConcurrency: " + navigator.hardwareConcurrency);
 
 // Print geolocation
+var geolocationPromise;
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        console.log("Geolocation: " + position.coords.latitude + ", " + position.coords.longitude);
+    geolocationPromise = new Promise(function(resolve, reject) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            addData("Geolocation: " + position.coords.latitude + ", " + position.coords.longitude);
+            resolve();
+        }, function(error) {
+            addData("Error occurred. Error code: " + error.code);
+            resolve();
+        });
     });
 } else {
-    console.log("Geolocation is not supported by this browser.");
+    addData("Geolocation is not supported by this browser.");
+    geolocationPromise = Promise.resolve();
 }
+
+// Function to download data
+function downloadData() {
+    var blob = new Blob([dataStr], {type: 'text/plain'});
+    var url = window.URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.txt';
+    a.click();
+}
+
+// Add a button to download the data
+var btn = document.createElement('button');
+btn.textContent = 'Download Data';
+btn.onclick = downloadData;
+btn.disabled = true; // Disable the button by default
+document.body.appendChild(btn);
+
+// Enable the button when all asynchronous operations are completed
+Promise.all([batteryPromise, geolocationPromise]).then(function() {
+    btn.disabled = false;
+});
