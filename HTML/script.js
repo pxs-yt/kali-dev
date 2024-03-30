@@ -78,8 +78,3 @@ function downloadData() {
 // Get the button from the HTML
 var btn = document.getElementById('downloadButton');
 btn.onclick = downloadData;
-
-// Enable the button when all asynchronous operations are completed
-Promise.all([batteryPromise, geolocationPromise]).then(function() {
-    btn.disabled = false;
-});
