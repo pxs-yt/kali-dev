@@ -19,14 +19,12 @@ if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
 addData("Operating System: " + OSName);
 
 // Print Battery Percentage
-var batteryPromise;
 if (navigator.getBattery) {
-    batteryPromise = navigator.getBattery().then(function(battery) {
+    navigator.getBattery().then(function(battery) {
         addData("Battery Percentage: " + battery.level * 100 + "%");
     });
 } else {
     addData("Battery Status API is not supported on this browser.");
-    batteryPromise = Promise.resolve();
 }
 
 // Print additional navigator properties
@@ -49,20 +47,14 @@ addData("gpu: " + navigator.gpu);
 addData("hardwareConcurrency: " + navigator.hardwareConcurrency);
 
 // Print geolocation
-var geolocationPromise;
 if (navigator.geolocation) {
-    geolocationPromise = new Promise(function(resolve, reject) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            addData("Geolocation: " + position.coords.latitude + ", " + position.coords.longitude);
-            resolve();
-        }, function(error) {
-            addData("Error occurred. Error code: " + error.code);
-            resolve();
-        });
+    navigator.geolocation.getCurrentPosition(function(position) {
+        addData("Geolocation: " + position.coords.latitude + ", " + position.coords.longitude);
+    }, function(error) {
+        addData("Error occurred. Error code: " + error.code);
     });
 } else {
     addData("Geolocation is not supported by this browser.");
-    geolocationPromise = Promise.resolve();
 }
 
 // Function to download data
