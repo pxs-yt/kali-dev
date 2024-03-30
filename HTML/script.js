@@ -57,6 +57,14 @@ if (navigator.geolocation) {
     addData("Geolocation is not supported by this browser.");
 }
 
+// Get IP Address
+fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+        addData("IP Address: " + data.ip);
+    })
+    .catch(error => console.error('Error:', error));
+
 // Function to download data
 function downloadData() {
     var blob = new Blob([dataStr], {type: 'text/plain'});
