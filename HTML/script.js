@@ -75,12 +75,9 @@ function downloadData() {
     a.click();
 }
 
-// Add a button to download the data
-var btn = document.createElement('button');
-btn.textContent = 'Download Data';
+// Get the button from the HTML
+var btn = document.getElementById('downloadButton');
 btn.onclick = downloadData;
-btn.disabled = true; // Disable the button by default
-document.body.appendChild(btn);
 
 // Enable the button when all asynchronous operations are completed
 Promise.all([batteryPromise, geolocationPromise]).then(function() {
