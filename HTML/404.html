@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 Not Found</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 60px;
+            margin: 0;
+            color: #ff0000; /* Change the color of the 404 text */
+        }
+        p {
+            color: #888;
+            font-size: 20px; /* Increase the size of the paragraph text */
+        }
+        a {
+            color: #0645ad;
+            text-decoration: none;
+            background-color: #ddd; /* Add a background color to the link */
+            padding: 10px; /* Add some padding to the link */
+            border-radius: 5px; /* Add rounded corners to the link */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>Page not found</p>
+        <a href="#" onclick="goBack()">Go Back</a>
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
