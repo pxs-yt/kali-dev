@@ -18,8 +18,14 @@ var snake = {
 };
 
 var apple = {
-    x: 320,
-    y: 320
+    x: getRandomInt(0, 25) * grid,
+    y: getRandomInt(0, 25) * grid
+};
+
+var orange = {
+    x: getRandomInt(0, 25) * grid,
+    y: getRandomInt(0, 25) * grid,
+    exists: false
 };
 
 function getRandomInt(min, max) {
@@ -30,7 +36,7 @@ function loop() {
     if (gameRunning) {
         requestAnimationFrame(loop);
     }
-    if (++count < 6) {    // The lower the number, the faster the game
+    if (++count < 6) {
         return;
     }
     count = 0;
@@ -68,11 +74,16 @@ function loop() {
         }
         context.fillRect(cell.x, cell.y, grid-1, grid-1);
         if (cell.x === apple.x && cell.y === apple.y) {
+            score++;
             snake.maxCells++;
             apple.x = getRandomInt(0, 25) * grid;
             apple.y = getRandomInt(0, 25) * grid;
-            score++;
-            document.getElementById('score').innerHTML = 'Score: ' + score;
+        }
+
+        if (orange.exists && cell.x === orange.x && cell.y === orange.y) {
+            score += 2;
+            snake.maxCells += 2;
+            orange.exists = false;
         }
 
         for (var i = index + 1; i < snake.cells.length; i++) {
@@ -84,6 +95,15 @@ function loop() {
 
     context.fillStyle = '#ff0000';
     context.fillRect(apple.x, apple.y, grid-1, grid-1);
+
+    if (orange.exists) {
+        context.fillStyle = '#ff8000'; // Orange color
+        context.fillRect(orange.x, orange.y, grid-1, grid-1);
+    } else if (Math.random() < 0.01) { // Adjust this number to control the spawn rate
+        orange.exists = true;
+        orange.x = getRandomInt(0, 25) * grid;
+        orange.y = getRandomInt(0, 25) * grid;
+    }
 }
 
 function gameOver() {
@@ -102,6 +122,7 @@ playAgainButton.addEventListener('click', function() {
     snake.dy = 0;
     apple.x = getRandomInt(0, 25) * grid;
     apple.y = getRandomInt(0, 25) * grid;
+    orange.exists = false;
     score = 0;
     document.getElementById('score').innerHTML = 'Score: ' + score;
     loop();
@@ -124,61 +145,6 @@ document.addEventListener('keydown', function(e) {
         snake.dy = grid;
         snake.dx = 0;
     }
-});
-
-// Add touch events
-canvas.addEventListener('touchstart', handleTouchStart, false);
-canvas.addEventListener('touchmove', handleTouchMove, false);
-
-var xDown = null;
-var yDown = null;
-
-function handleTouchStart(evt) {
-    xDown = evt.touches[0].clientX;
-    yDown = evt.touches[0].clientY;
-};
-
-function handleTouchMove(evt) {
-    if (!xDown || !yDown) {
-        return;
-    }
-
-    var xUp = evt.touches[0].clientX;
-    var yUp = evt.touches[0].clientY;
-
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (xDiff > 0 && snake.dx === 0) {
-            /* left swipe */
-            snake.dx = -grid;
-            snake.dy = 0;
-        } else if (snake.dx === 0) {
-            /* right swipe */
-            snake.dx = grid;
-            snake.dy = 0;
-        }
-    } else {
-        if (yDiff > 0 && snake.dy === 0) {
-            /* up swipe */
-            snake.dy = -grid;
-            snake.dx = 0;
-        } else if (snake.dy === 0) {
-            /* down swipe */
-            snake.dy = grid;
-            snake.dx = 0;
-        }
-    }
-    /* reset values */
-    xDown = null;
-    yDown = null;
-};
-
-var goBackButton = document.getElementById('backButton');
-
-goBackButton.addEventListener('click', function() {
-    window.location.href = 'https://pxs-yt.github.io/kali-dev/HTML/index.html';
 });
 
 requestAnimationFrame(loop);
