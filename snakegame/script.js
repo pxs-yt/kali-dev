@@ -30,7 +30,7 @@ function loop() {
     if (gameRunning) {
         requestAnimationFrame(loop);
     }
-    if (++count < 7) {
+    if (++count < 6) {    // The lower the number, the faster the game
         return;
     }
     count = 0;
