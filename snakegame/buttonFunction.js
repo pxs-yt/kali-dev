@@ -1,3 +1,3 @@
 document.getElementById("backButton") = function() {
-    window.history.back();
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/index.html"
 }

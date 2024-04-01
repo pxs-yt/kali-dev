@@ -6,6 +6,7 @@ var playAgainButton = document.getElementById('play-again');
 var grid = 16;
 var count = 0;
 var score = 0;
+var gameRunning = true;
 
 var snake = {
     x: 160,
@@ -26,8 +27,10 @@ function getRandomInt(min, max) {
 }
 
 function loop() {
-    requestAnimationFrame(loop);
-    if (++count < 8) { // Increase this number to make the game slower
+    if (gameRunning) {
+        requestAnimationFrame(loop);
+    }
+    if (++count < 4) {
         return;
     }
     count = 0;
@@ -58,6 +61,11 @@ function loop() {
 
     context.fillStyle = '#4caf50';
     snake.cells.forEach(function(cell, index) {
+        if (index === 0) {
+            context.fillStyle = '#0000ff'; // make the head of the snake blue
+        } else {
+            context.fillStyle = '#4caf50';
+        }
         context.fillRect(cell.x, cell.y, grid-1, grid-1);
         if (cell.x === apple.x && cell.y === apple.y) {
             snake.maxCells++;
@@ -79,6 +87,13 @@ function loop() {
 }
 
 function gameOver() {
+    gameRunning = false;
+    gameOverElement.style.display = 'block';
+}
+
+playAgainButton.addEventListener('click', function() {
+    gameOverElement.style.display = 'none';
+    gameRunning = true;
     snake.x = 160;
     snake.y = 160;
     snake.cells = [];
@@ -89,11 +104,6 @@ function gameOver() {
     apple.y = getRandomInt(0, 25) * grid;
     score = 0;
     document.getElementById('score').innerHTML = 'Score: ' + score;
-    gameOverElement.style.display = 'block';
-}
-
-playAgainButton.addEventListener('click', function() {
-    gameOverElement.style.display = 'none';
     loop();
 });
 
