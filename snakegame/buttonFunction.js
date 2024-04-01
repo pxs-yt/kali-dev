@@ -1,3 +1,3 @@
-document.getElementById("backButton") = function goBack() {
+document.getElementById("backButton") = function() {
     window.history.back();
 }
