@@ -175,4 +175,10 @@ function handleTouchMove(evt) {
     yDown = null;
 };
 
+var goBackButton = document.getElementById('backButton');
+
+goBackButton.addEventListener('click', function() {
+    window.location.href = 'https://pxs-yt.github.io/kali-dev/HTML/index.html';
+});
+
 requestAnimationFrame(loop);

@@ -31,6 +31,7 @@ body {
 
 #game-over h1 {
     font-size: 50px;
+    font-family: 'Rubik', sans-serif;
 }
 
 #game-over button {
