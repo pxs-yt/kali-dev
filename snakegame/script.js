@@ -19,7 +19,8 @@ var snake = {
 
 var apple = {
     x: getRandomInt(0, 25) * grid,
-    y: getRandomInt(0, 25) * grid
+    y: getRandomInt(0, 25) * grid,
+    exists: true
 };
 
 var orange = {
@@ -73,17 +74,22 @@ function loop() {
             context.fillStyle = '#4caf50';
         }
         context.fillRect(cell.x, cell.y, grid-1, grid-1);
-        if (cell.x === apple.x && cell.y === apple.y) {
+        if (apple.exists && cell.x === apple.x && cell.y === apple.y) {
             score++;
             snake.maxCells++;
-            apple.x = getRandomInt(0, 25) * grid;
-            apple.y = getRandomInt(0, 25) * grid;
+            apple.exists = false;
+            orange.exists = true;
+            orange.x = getRandomInt(0, 25) * grid;
+            orange.y = getRandomInt(0, 25) * grid;
         }
 
         if (orange.exists && cell.x === orange.x && cell.y === orange.y) {
             score += 2;
             snake.maxCells += 2;
             orange.exists = false;
+            apple.exists = true;
+            apple.x = getRandomInt(0, 25) * grid;
+            apple.y = getRandomInt(0, 25) * grid;
         }
 
         for (var i = index + 1; i < snake.cells.length; i++) {
@@ -93,16 +99,14 @@ function loop() {
         }
     });
 
-    context.fillStyle = '#ff0000';
-    context.fillRect(apple.x, apple.y, grid-1, grid-1);
+    if (apple.exists) {
+        context.fillStyle = '#ff0000';
+        context.fillRect(apple.x, apple.y, grid-1, grid-1);
+    }
 
     if (orange.exists) {
         context.fillStyle = '#ff8000'; // Orange color
         context.fillRect(orange.x, orange.y, grid-1, grid-1);
-    } else if (Math.random() < 0.01) { // Adjust this number to control the spawn rate
-        orange.exists = true;
-        orange.x = getRandomInt(0, 25) * grid;
-        orange.y = getRandomInt(0, 25) * grid;
     }
 }
 
@@ -120,6 +124,7 @@ playAgainButton.addEventListener('click', function() {
     snake.maxCells = 4;
     snake.dx = grid;
     snake.dy = 0;
+    apple.exists = true;
     apple.x = getRandomInt(0, 25) * grid;
     apple.y = getRandomInt(0, 25) * grid;
     orange.exists = false;
@@ -146,5 +151,53 @@ document.addEventListener('keydown', function(e) {
         snake.dx = 0;
     }
 });
+
+canvas.addEventListener('touchstart', handleTouchStart, false);
+canvas.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;
+var yDown = null;
+
+function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+    yDown = evt.touches[0].clientY;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0 && snake.dx === 0) {
+            /* left swipe */
+            snake.dx = -grid;
+            snake.dy = 0;
+        } else if (snake.dx === 0) {
+            /* right swipe */
+            snake.dx = grid;
+            snake.dy = 0;
+        }
+    } else {
+        if (yDiff > 0 && snake.dy === 0) {
+            /* up swipe */
+            snake.dy = -grid;
+            snake.dx = 0;
+        } else if (snake.dy === 0) {
+            /* down swipe */
+            snake.dy = grid;
+            snake.dx = 0;
+        }
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;
+};
 
 requestAnimationFrame(loop);
