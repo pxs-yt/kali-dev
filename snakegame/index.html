@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Snake Game - PXS</title>
-        <link rel="stylesheet" href="style.css">
-        <!--Google Fonts integration (Protest Riot Regular, Rubik)-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap">
+        <style>
+            body {
+                background-color: #000;
+                color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            #game {
+                background-color: #fff;
+            }
+
+            #score {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 20px;
+                color: white;
+            }
+
+            #game-over {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: white;
+                display: none;
+            }
+
+            #game-over h1 {
+                font-size: 50px;
+            }
+
+            #game-over button {
+                padding: 10px 20px;
+                font-size: 20px;
+                cursor: pointer;
+            }
+        </style>
     </head>
     <body>
         <div id="score">Score: 0</div>
         <canvas id="game" width="400" height="400"></canvas>
-        <div id="game-over" style="display: none;">
+        <div id="game-over">
             <h1>Game Over!</h1>
-            <button id="play-again">Play Again</button> <br>
-            <button id="backButton">Go Back</button>
+            <button id="play-again">Play Again</button>
         </div>
         <script src="script.js"></script>
     </body>
