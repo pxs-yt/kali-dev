@@ -1,5 +1,7 @@
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
+var gameOverElement = document.getElementById('game-over');
+var playAgainButton = document.getElementById('play-again');
 
 var grid = 16;
 var count = 0;
@@ -25,7 +27,7 @@ function getRandomInt(min, max) {
 
 function loop() {
     requestAnimationFrame(loop);
-    if (++count < 4) {
+    if (++count < 8) { // Increase this number to make the game slower
         return;
     }
     count = 0;
@@ -67,16 +69,7 @@ function loop() {
 
         for (var i = index + 1; i < snake.cells.length; i++) {
             if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
-                snake.x = 160;
-                snake.y = 160;
-                snake.cells = [];
-                snake.maxCells = 4;
-                snake.dx = grid;
-                snake.dy = 0;
-                apple.x = getRandomInt(0, 25) * grid;
-                apple.y = getRandomInt(0, 25) * grid;
-                score = 0;
-                document.getElementById('score').innerHTML = 'Score: ' + score;
+                gameOver();
             }
         }
     });
@@ -84,6 +77,25 @@ function loop() {
     context.fillStyle = '#ff0000';
     context.fillRect(apple.x, apple.y, grid-1, grid-1);
 }
+
+function gameOver() {
+    snake.x = 160;
+    snake.y = 160;
+    snake.cells = [];
+    snake.maxCells = 4;
+    snake.dx = grid;
+    snake.dy = 0;
+    apple.x = getRandomInt(0, 25) * grid;
+    apple.y = getRandomInt(0, 25) * grid;
+    score = 0;
+    document.getElementById('score').innerHTML = 'Score: ' + score;
+    gameOverElement.style.display = 'block';
+}
+
+playAgainButton.addEventListener('click', function() {
+    gameOverElement.style.display = 'none';
+    loop();
+});
 
 document.addEventListener('keydown', function(e) {
     if (e.which === 37 && snake.dx === 0) {
