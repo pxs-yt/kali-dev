@@ -78,9 +78,11 @@ function loop() {
             score++;
             snake.maxCells++;
             apple.exists = false;
-            orange.exists = true;
-            orange.x = getRandomInt(0, 25) * grid;
-            orange.y = getRandomInt(0, 25) * grid;
+            if (Math.random() < 0.05) { // Adjust this number to control the spawn rate
+                orange.exists = true;
+                orange.x = getRandomInt(0, 25) * grid;
+                orange.y = getRandomInt(0, 25) * grid;
+            }
         }
 
         if (orange.exists && cell.x === orange.x && cell.y === orange.y) {
