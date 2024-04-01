@@ -30,7 +30,7 @@ function loop() {
     if (gameRunning) {
         requestAnimationFrame(loop);
     }
-    if (++count < 4) {
+    if (++count < 8) {
         return;
     }
     count = 0;
@@ -125,5 +125,54 @@ document.addEventListener('keydown', function(e) {
         snake.dx = 0;
     }
 });
+
+// Add touch events
+canvas.addEventListener('touchstart', handleTouchStart, false);
+canvas.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;
+var yDown = null;
+
+function handleTouchStart(evt) {
+    xDown = evt.touches[0].clientX;
+    yDown = evt.touches[0].clientY;
+};
+
+function handleTouchMove(evt) {
+    if (!xDown || !yDown) {
+        return;
+    }
+
+    var xUp = evt.touches[0].clientX;
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0 && snake.dx === 0) {
+            /* left swipe */
+            snake.dx = -grid;
+            snake.dy = 0;
+        } else if (snake.dx === 0) {
+            /* right swipe */
+            snake.dx = grid;
+            snake.dy = 0;
+        }
+    } else {
+        if (yDiff > 0 && snake.dy === 0) {
+            /* up swipe */
+            snake.dy = -grid;
+            snake.dx = 0;
+        } else if (snake.dy === 0) {
+            /* down swipe */
+            snake.dy = grid;
+            snake.dx = 0;
+        }
+    }
+    /* reset values */
+    xDown = null;
+    yDown = null;
+};
 
 requestAnimationFrame(loop);
