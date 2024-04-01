@@ -82,6 +82,10 @@ function loop() {
                 orange.exists = true;
                 orange.x = getRandomInt(0, 25) * grid;
                 orange.y = getRandomInt(0, 25) * grid;
+            } else {
+                apple.exists = true;
+                apple.x = getRandomInt(0, 25) * grid;
+                apple.y = getRandomInt(0, 25) * grid;
             }
         }
 
