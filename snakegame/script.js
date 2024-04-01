@@ -30,7 +30,7 @@ function loop() {
     if (gameRunning) {
         requestAnimationFrame(loop);
     }
-    if (++count < 8) {
+    if (++count < 7) {
         return;
     }
     count = 0;
