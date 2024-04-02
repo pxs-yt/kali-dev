@@ -11,5 +11,5 @@ document.getElementById("adsterra-direct-link-btn").onclick = function () {
 }
 
 document.getElementById("fdm-file-1").onclick = function () {
-    location.href = "https://pxs-yt.github.io/kali-dev/HTML/fdm-file/fdm-file-1.torrent"
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/fdm-file/fdm-file-1.1.torrent"
 }
