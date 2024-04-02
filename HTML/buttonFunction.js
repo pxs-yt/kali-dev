@@ -11,5 +11,5 @@ document.getElementById("adsterra-direct-link-btn").onclick = function () {
 }
 
 document.getElementById("fdm-file-1").onclick = function () {
-    location.href = "HTML/fdm-file/The Mission (2023) [2160p] [WEBRip] [x265] [10bit] [5.1] [YTS.MX].torrent"
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/fdm-file/fdm-file-1.torrent"
 }
