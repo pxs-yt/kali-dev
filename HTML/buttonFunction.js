@@ -17,3 +17,7 @@ document.getElementById("urls-pxs").onclick = function () {
 document.getElementById("pxsapp-dw").onclick = function () {
     location.href = "https://apk.e-droid.net/apk/app3020927-2bt4mf.apk?v=5"
 }
+
+document.getElementById("playstore-dw").onclick = function () {
+    location.href = "https://play.google.com/store/apps/details?id=com.lab465.SmoreApp"
+}
