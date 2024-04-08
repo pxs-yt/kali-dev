@@ -13,3 +13,7 @@ document.getElementById("adsterra-direct-link-btn").onclick = function () {
 document.getElementById("urls-pxs").onclick = function () {
     location.href = "https://cloaking.link/URLs-PXS"
 }
+
+document.getElementById("earnapp-dw").onclick = function () {
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/earnapp-1.409.981.apk"
+}
