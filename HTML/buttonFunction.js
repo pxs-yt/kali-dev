@@ -18,6 +18,15 @@ document.getElementById("pxsapp-dw").onclick = function () {
     location.href = "https://apk.e-droid.net/apk/app3020927-2bt4mf.apk?v=5"
 }
 
-document.getElementById("playstore-dw").onclick = function () {
-    location.href = "https://play.google.com/store/apps/details?id=com.lab465.SmoreApp"
+document.getElementById("dwl").onclick = function () {
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/dwl/dwl.html"
+}
+
+// dwl.html button code
+document.getElementById("search-engines-dwl").onclick = function () {
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/dwl/search-engines-dwl.html"
+}
+
+document.getElementById("ahmia-dwl").onclick = function () {
+    location.href = "http://juhanurmihxlp77nkq76byazcldy2hlmovfu2epvl5ankdibsot4csyd.onion/"
 }
