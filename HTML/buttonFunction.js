@@ -22,6 +22,10 @@ document.getElementById("dwl").onclick = function () {
     location.href = "https://pxs-yt.github.io/kali-dev/HTML/dwl/dwl.html"
 }
 
+document.getElementById("arba-song").onclick = function () {
+    location.href = "https://pxs-yt.github.io/kali-dev/HTML/Caught_in_Your_Rhythm-Version_3.mp3"
+}
+
 // dwl.html button code
 document.getElementById("search-engines-dwl").onclick = function () {
     location.href = "https://pxs-yt.github.io/kali-dev/HTML/dwl/search-engines-dwl.html"
